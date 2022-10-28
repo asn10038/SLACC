@@ -36,11 +36,26 @@ def parse_file_for_args(file_path, dataset, main_function_name="_main", force_fe
   variable_visitor = arg_parser.VariableVisitor(file_path).parse()
   tracer = Tracer(variable_visitor, file_path, ['parse_file_for_args'])
   sys.path.append(properties.PYTHON_PROJECTS_HOME)
-  module = helper.import_file(file_path)
-  main_function = getattr(module, main_function_name)
-  sys.settrace(tracer.trace_calls)
-  main_function()
-  sys.settrace(None)
+  # need to set the input file here
+  if dataset == 'atcoder':
+      #reset standard in
+      sys.stdin.flush()
+      # TODO this needs to be fixed
+      inp_path = file_path.split('/')[:-2]
+      inp_path.append('input.txt')
+      sys.stdin = open('/'.join(inp_path))
+      # set the tracer
+      sys.settrace(tracer.trace_calls)
+      # import the function
+      module = helper.import_file(file_path)
+  else: 
+      module = helper.import_file(file_path)
+      main_function = getattr(module, main_function_name)
+      sys.settrace(tracer.trace_calls)
+      print("I am here")
+      #main_function()
+      print("i am here now")
+      sys.settrace(None)
   sys.path.remove(properties.PYTHON_PROJECTS_HOME)
   store.save_meta(variable_visitor.to_bson())
   ### Useless below

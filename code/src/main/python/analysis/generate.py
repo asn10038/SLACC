@@ -168,7 +168,7 @@ def generate_for_file(dataset, file_name):
   content = "\n\n".join(body)
   write_file = os.path.join(parent_folder, "%s.py" % helper.generate_py_file_name())
   cache.write_file(write_file, content)
-  assert helper.is_valid_file(write_file)
+  #assert helper.is_valid_file(write_file)
   sys.path.append(properties.PYTHON_PROJECTS_HOME)
   return generated_functions
 
