@@ -10,7 +10,7 @@ __author__ = "bigfatnoob"
 File paths
 """
 HOME = os.getenv("HOME")
-ROOT_HOME = os.path.join(HOME, "Raise", "ProgramRepair")
+ROOT_HOME = "/root"
 CODESEER_HOME = os.path.join(ROOT_HOME, "SLACC")
 CODE_HOME = os.path.join(CODESEER_HOME, "code")
 META_RESULTS_FOLDER = os.path.join(CODE_HOME, "meta_results")
