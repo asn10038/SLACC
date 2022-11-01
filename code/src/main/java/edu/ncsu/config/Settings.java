@@ -22,7 +22,7 @@ public class Settings {
     /**
      * Parent folder of the main project source code
      */
-    public static String ROOT_PATH = Utils.pathJoin(HOME, "Raise", "ProgramRepair");
+    public static String ROOT_PATH = "/root";
 
     /**
      * Project main folder. Includes source code(code), codejam projects(projects) etc.
