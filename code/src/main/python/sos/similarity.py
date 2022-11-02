@@ -139,6 +139,23 @@ def compute_similarity(dataset, language=None, functions=None, base_folder=None,
   meta_data += Stat(sizes).report()
   cache.write_file(clusters_report_file, meta_data)
 
+def do_only_similarity(dataset, language, filename="similarity_scores.csv"):
+    if language == "java":
+      functions = load_functions(dataset, update_clone_meta=False)
+    elif language == "python":
+      functions = load_py_functions(dataset)
+    elif language == "java_python":
+      functions = load_functions(dataset, update_clone_meta=False) + load_py_functions(dataset)
+    else:
+      raise RuntimeError("Invalid language: %s" % language)
+    LOGGER.info("doing similarity...")
+    base_folder = lib.get_clusters_folder(dataset)
+    output_filepath = os.path.join(base_folder, "%s" % filename)
+    similarities = get_clusterer()(functions).calculate_similarities()
+    with open(output_filepath, 'w+') as out:
+        import csv
+        mywriter = csv.writer(out, delimiter=',')
+        mywriter.writerows(similarities)
 
 """
 Validity

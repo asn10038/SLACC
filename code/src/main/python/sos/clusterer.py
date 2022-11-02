@@ -116,6 +116,19 @@ class RepresentativeClusterer(O):
     save_clusters_to_txt(clusters, file_name)
     return clusters
 
+  def calculate_similarities(self):
+    LOGGER.info("calculating user Representative sampling Clusterer")
+    n = len(self.functions)
+    res = [[-1]*n]*n
+    for i in xrange(n-1):
+        LOGGER.info("Calculating similarity for function %d/%d" % (i+1, n-1))
+        for j in xrange(i+1, n):
+            f_i = self.functions[i]
+            f_j = self.functions[j]
+            if self.union_find.find(f_i) == self.union_find.find(f_j):
+              continue
+            res[i][j] = self.distance_function(f_i, f_j)
+    return res
 
 if __name__ == "__main__":
   _transfer_clusters("IntroClassJava")

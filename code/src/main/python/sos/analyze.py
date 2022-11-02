@@ -55,6 +55,10 @@ def save_clustered_function_names(dataset, language):
   for name, clones in cloned_functions.items():
     execution_store.save_cloned_function_names(name, clones)
 
+def get_similarities(dataset, language):
+    LOGGER.info("Computing similarities of functions in dataset '%s' and language '%s'" % (dataset, language))
+    similarity.do_only_similarity(dataset, language)
+
 
 def get_cross_val(dataset, n_folds, as_dict=False):
   functions = similarity.load_functions(dataset, is_test=True) + similarity.load_py_functions(dataset, is_test=True)
@@ -365,6 +369,9 @@ def _main():
         eg. python sos/similarity <utility> <dataset> java_python""")
       exit()
     save_only_mixed_clusters(dataset, args[3])
+  elif utility == "get_similarities":
+    language = args[3] if len(args) >= 4 else "java"
+    get_similarities(dataset, language)
   else:
     print("Invalid utility: %s" % utility)
     print(_help())
